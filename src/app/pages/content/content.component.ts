@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { dataFake } from 'src/app/data/dataFake';
 
 @Component({
   selector: 'app-content',
@@ -8,9 +10,32 @@ import { Component, Input } from '@angular/core';
 export class ContentComponent {
 
   @Input()
-  photoCover:string="https://blog.geekhunter.com.br/wp-content/uploads/2020/07/pngwing.com_.png"
+  photoCover:string=""
   @Input()
-  contentTitle:string="NOVO JAVA 22"
+  contentTitle:string=""
   @Input()
-  contentDescription:string="Esse é o java do futuro atual !"
+  contentDescription:string=""
+  private id : string | null = "0"
+
+  constructor (
+    private route:ActivatedRoute
+  ) {
+    this.route.paramMap.subscribe((parametros:any)=>{
+      this.id = parametros.get("id")
+    })
+
+    // this.route.paramMap.subscribe( value => 
+    //   this.id = value.get("id")
+    // )
+    
+    this.setValuesToComponent(this.id)
+  }
+
+  setValuesToComponent(id:string | null){
+    const result = dataFake.filter(value => value.id == id)[0]
+    
+      this.photoCover = result.photoCover
+      this.contentTitle = result.title
+      this.contentDescription = result.description
+  }
 }

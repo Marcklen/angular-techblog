@@ -21,7 +21,3 @@ export class BigCardComponent implements OnInit {
   ngOnInit(): void {
   }
 }
-
-/**
- * 
- */
